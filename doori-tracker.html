@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>두리 음수량 트래커 🐾</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif; background: #f5f5f5; color: #222; }
+  .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+  .card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .card-title { font-size: 13px; font-weight: 600; color: #888; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .goal-row { display: flex; align-items: center; gap: 8px; }
+  .goal-row label { font-size: 14px; color: #555; }
+  .goal-row input { width: 80px; padding: 7px 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; }
+  .goal-row span { font-size: 14px; color: #888; }
+
+  .input-group { margin-bottom: 10px; }
+  .input-group label { display: block; font-size: 13px; color: #888; margin-bottom: 4px; }
+  .input-group input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
+
+  .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
+  .btn-primary { background: #1D9E75; color: #fff; }
+  .btn-primary:active { background: #178060; }
+
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .stat { background: #f7f7f7; border-radius: 10px; padding: 12px; text-align: center; }
+  .stat-label { font-size: 12px; color: #999; margin-bottom: 4px; }
+  .stat-val { font-size: 26px; font-weight: 700; color: #222; }
+  .stat-unit { font-size: 12px; color: #aaa; }
+
+  .bar-bg { background: #eee; border-radius: 8px; height: 12px; overflow: hidden; margin-bottom: 6px; }
+  .bar-fill { height: 12px; border-radius: 8px; background: #1D9E75; transition: width 0.5s; }
+  .bar-fill.warn { background: #EF9F27; }
+  .bar-fill.over { background: #E24B4A; }
+  .bar-text { font-size: 12px; color: #aaa; text-align: right; }
+
+  .log-list { list-style: none; }
+  .log-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .log-item:last-child { border-bottom: none; }
+  .log-time { font-size: 14px; color: #aaa; width: 55px; }
+  .log-ml { font-size: 16px; font-weight: 600; }
+  .log-del { background: none; border: none; font-size: 18px; color: #ccc; cursor: pointer; padding: 0 4px; }
+  .log-del:active { color: #E24B4A; }
+
+  .empty { text-align: center; color: #ccc; font-size: 14px; padding: 20px 0; }
+
+  .hist-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .hist-item:last-child { border-bottom: none; }
+  .hist-date { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 3px; }
+  .hist-detail { font-size: 12px; color: #aaa; }
+
+  .status-badge { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-left: 6px; }
+  .badge-good { background: #e1f5ee; color: #0F6E56; }
+  .badge-warn { background: #faeeda; color: #854F0B; }
+  .badge-bad { background: #fcebeb; color: #A32D2D; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .tab { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; background: #eee; color: #888; }
+  .tab.active { background: #1D9E75; color: #fff; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .dog-avatar { width: 44px; height: 44px; border-radius: 50%; background: #e1f5ee; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .projection { font-size: 12px; color: #aaa; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="dog-avatar">🐾</div>
+    <div>
+      <h1>두리 음수량 트래커</h1>
+      <div class="subtitle" id="todayLabel"></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('input')">✏️ 입력</button>
+    <button class="tab" onclick="switchTab('view')">📊 확인</button>
+    <button class="tab" onclick="switchTab('history')">📅 히스토리</button>
+  </div>
+
+  <!-- 입력 탭 -->
+  <div class="view active" id="tab-input">
+    <div class="card">
+      <div class="card-title">목표 설정</div>
+      <div class="goal-row">
+        <label>하루 목표</label>
+        <input type="number" id="goalInput" value="500" min="0" step="10" onchange="saveGoal()" />
+        <span>ml</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">음수 기록 추가</div>
+      <div class="input-group">
+        <label>시간</label>
+        <input type="time" id="timeInput" />
+      </div>
+      <div class="input-group">
+        <label>마신 양 (ml)</label>
+        <input type="number" id="mlInput" placeholder="예: 100" min="0" step="5" />
+      </div>
+      <button class="btn btn-primary" onclick="addEntry()">기록 추가</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">오늘 기록</div>
+      <ul class="log-list" id="logList"><li class="empty">아직 기록이 없어요</li></ul>
+    </div>
+  </div>
+
+  <!-- 확인 탭 -->
+  <div class="view" id="tab-view">
+    <div class="card">
+      <div class="card-title">오늘 요약</div>
+      <div class="summary-grid">
+        <div class="stat">
+          <div class="stat-label">총 음수량</div>
+          <div class="stat-val" id="totalMl">0</div>
+          <div class="stat-unit">ml</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">목표 달성률</div>
+          <div class="stat-val" id="pctVal">0%</div>
+          <div class="stat-unit" id="statusText">—</div>
+        </div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+      <div class="bar-text" id="barText"></div>
+      <div class="projection" id="projection"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">오늘 기록</div>
+      <ul class="log-list" id="logList2"><li class="empty">아직 기록이 없어요</li></ul>
+    </div>
+  </div>
+
+  <!-- 히스토리 탭 -->
+  <div class="view" id="tab-history">
+    <div class="card">
+      <div class="card-title">날짜별 기록</div>
+      <div id="historyList"><div class="empty">히스토리 없음</div></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCkQsMqcbsIG9ovGDN-hcBZTv-goDauoXY",
+  authDomain: "dooree405.firebaseapp.com",
+  databaseURL: "https://dooree405-default-rtdb.firebaseio.com",
+  projectId: "dooree405",
+  storageBucket: "dooree405.firebasestorage.app",
+  messagingSenderId: "800603847567",
+  appId: "1:800603847567:web:ca9114d3377b8e677ee9fa",
+  measurementId: "G-BJ483GB6HN"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+function todayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function setNow() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  document.getElementById('timeInput').value = h + ':' + m;
+}
+
+window.saveGoal = function() {
+  const goal = parseInt(document.getElementById('goalInput').value) || 500;
+  set(ref(db, 'goal'), goal);
+};
+
+window.addEntry = function() {
+  const time = document.getElementById('timeInput').value;
+  const ml = parseInt(document.getElementById('mlInput').value);
+  if (!time || isNaN(ml) || ml <= 0) {
+    alert('시간과 음수량을 입력해주세요!');
+    return;
+  }
+  const key = todayKey();
+  const id = Date.now();
+  set(ref(db, `logs/${key}/${id}`), { time, ml });
+  document.getElementById('mlInput').value = '';
+  setNow();
+  alert('✅ 기록 완료!');
+};
+
+window.deleteEntry = function(dateKey, id) {
+  if (confirm('이 기록을 삭제할까요?')) {
+    remove(ref(db, `logs/${dateKey}/${id}`));
+  }
+};
+
+window.switchTab = function(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['input','view','history'][i] === name);
+  });
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+};
+
+function renderLogs(entries, todayKey, listId) {
+  const list = document.getElementById(listId);
+  if (!entries || entries.length === 0) {
+    list.innerHTML = '<li class="empty">아직 기록이 없어요</li>';
+    return;
+  }
+  list.innerHTML = entries.map(e =>
+    `<li class="log-item">
+      <span class="log-time">${e.time}</span>
+      <span class="log-ml">${e.ml} ml</span>
+      <button class="log-del" onclick="deleteEntry('${todayKey}', ${e.id})">🗑</button>
+    </li>`
+  ).join('');
+}
+
+function renderSummary(entries, goal) {
+  const total = entries.reduce((s, e) => s + e.ml, 0);
+  const pct = Math.min(Math.round(total / goal * 100), 999);
+  document.getElementById('totalMl').textContent = total;
+  document.getElementById('pctVal').textContent = pct + '%';
+
+  let statusText = '', badgeClass = '';
+  if (pct >= 100) { statusText = '목표 달성! 🎉'; badgeClass = 'badge-good'; }
+  else if (pct >= 60) { statusText = '잘 하고 있어요'; badgeClass = 'badge-good'; }
+  else if (pct >= 30) { statusText = '조금 더 필요해요'; badgeClass = 'badge-warn'; }
+  else { statusText = '물이 많이 부족해요'; badgeClass = 'badge-bad'; }
+  document.getElementById('statusText').textContent = statusText;
+
+  const fill = document.getElementById('barFill');
+  fill.style.width = Math.min(pct, 100) + '%';
+  fill.className = 'bar-fill' + (pct >= 100 ? ' over' : pct < 50 ? ' warn' : '');
+  document.getElementById('barText').textContent = `${total} / ${goal} ml`;
+
+  if (entries.length >= 2) {
+    const toMin = t => { const [h,m] = t.split(':').map(Number); return h*60+m; };
+    const first = toMin(entries[0].time);
+    const last = toMin(entries[entries.length-1].time);
+    const elapsed = last - first;
+    if (elapsed > 0) {
+      const rate = total / elapsed;
+      const proj = Math.round(total + rate * (23*60 - last));
+      document.getElementById('projection').textContent = `현재 추세로 하루 종일이면 약 ${proj}ml 예상`;
+    }
+  }
+}
+
+// 실시간 리스너
+const key = todayKey();
+document.getElementById('todayLabel').textContent = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
+setNow();
+
+// goal
+onValue(ref(db, 'goal'), snap => {
+  const goal = snap.val() || 500;
+  document.getElementById('goalInput').value = goal;
+});
+
+// today logs
+onValue(ref(db, `logs/${key}`), snap => {
+  const val = snap.val();
+  const entries = val
+    ? Object.entries(val).map(([id, v]) => ({ id: Number(id), ...v })).sort((a, b) => a.time.localeCompare(b.time))
+    : [];
+  const goal = parseInt(document.getElementById('goalInput').value) || 500;
+  renderLogs(entries, key, 'logList');
+  renderLogs(entries, key, 'logList2');
+  renderSummary(entries, goal);
+});
+
+// history
+onValue(ref(db, 'logs'), snap => {
+  const val = snap.val() || {};
+  const goal = parseInt(document.getElementById('goalInput').value) || 500;
+  const keys = Object.keys(val).filter(k => k !== key).sort().reverse();
+  const hist = document.getElementById('historyList');
+  if (keys.length === 0) { hist.innerHTML = '<div class="empty">히스토리 없음</div>'; return; }
+  hist.innerHTML = keys.slice(0, 30).map(k => {
+    const entries = Object.values(val[k]);
+    const total = entries.reduce((s, e) => s + e.ml, 0);
+    const pct = Math.round(total / goal * 100);
+    const color = pct >= 100 ? '#0F6E56' : pct >= 60 ? '#854F0B' : '#A32D2D';
+    const detail = entries.sort((a,b) => a.time.localeCompare(b.time)).map(e => `${e.time} ${e.ml}ml`).join(' · ');
+    return `<div class="hist-item">
+      <div class="hist-date">${k.slice(5).replace('-','/')} — <span style="color:${color};font-weight:700">${total}ml</span> (${pct}%)</div>
+      <div class="hist-detail">${detail}</div>
+    </div>`;
+  }).join('');
+});
+</script>
+</body>
+</html>
