@@ -8,67 +8,74 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif; background: #f5f5f5; color: #222; }
   .container { max-width: 480px; margin: 0 auto; padding: 16px; }
-  h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
-  .subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
-
   .card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
-  .card-title { font-size: 13px; font-weight: 600; color: #888; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-  .goal-row { display: flex; align-items: center; gap: 8px; }
-  .goal-row label { font-size: 14px; color: #555; }
-  .goal-row input { width: 80px; padding: 7px 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; }
-  .goal-row span { font-size: 14px; color: #888; }
-
+  .card-title { font-size: 13px; font-weight: 600; color: #888; margin-bottom: 12px; }
   .input-group { margin-bottom: 10px; }
   .input-group label { display: block; font-size: 13px; color: #888; margin-bottom: 4px; }
-  .input-group input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
-
+  .input-group input, .input-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; font-family: inherit; }
+  .input-group textarea { resize: none; line-height: 1.5; }
   .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
   .btn-primary { background: #1D9E75; color: #fff; }
   .btn-primary:active { background: #178060; }
-
+  .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 8px; border: 1px solid #ddd; background: #fff; cursor: pointer; color: #555; width: auto; }
+  .btn-sm:active { background: #f0f0f0; }
   .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .stat { background: #f7f7f7; border-radius: 10px; padding: 12px; text-align: center; }
   .stat-label { font-size: 12px; color: #999; margin-bottom: 4px; }
-  .stat-val { font-size: 26px; font-weight: 700; color: #222; }
+  .stat-val { font-size: 24px; font-weight: 700; color: #222; }
   .stat-unit { font-size: 12px; color: #aaa; }
-
   .bar-bg { background: #eee; border-radius: 8px; height: 12px; overflow: hidden; margin-bottom: 6px; }
   .bar-fill { height: 12px; border-radius: 8px; background: #1D9E75; transition: width 0.5s; }
   .bar-fill.warn { background: #EF9F27; }
   .bar-fill.over { background: #E24B4A; }
-  .bar-text { font-size: 12px; color: #aaa; text-align: right; }
-
+  .bar-text { font-size: 12px; color: #aaa; text-align: right; margin-bottom: 4px; }
   .log-list { list-style: none; }
-  .log-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .log-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; }
   .log-item:last-child { border-bottom: none; }
-  .log-time { font-size: 14px; color: #aaa; width: 55px; }
-  .log-ml { font-size: 16px; font-weight: 600; }
+  .log-time { font-size: 14px; color: #555; width: 60px; font-weight: 600; flex-shrink: 0; }
+  .log-ml { font-size: 15px; font-weight: 600; }
+  .log-rate { font-size: 12px; color: #aaa; }
   .log-del { background: none; border: none; font-size: 18px; color: #ccc; cursor: pointer; padding: 0 4px; }
-  .log-del:active { color: #E24B4A; }
-
   .empty { text-align: center; color: #ccc; font-size: 14px; padding: 20px 0; }
-
-  .hist-item { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .hist-item { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
   .hist-item:last-child { border-bottom: none; }
   .hist-date { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 3px; }
-  .hist-detail { font-size: 12px; color: #aaa; }
-
-  .status-badge { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-left: 6px; }
-  .badge-good { background: #e1f5ee; color: #0F6E56; }
-  .badge-warn { background: #faeeda; color: #854F0B; }
-  .badge-bad { background: #fcebeb; color: #A32D2D; }
-
+  .hist-detail { font-size: 12px; color: #aaa; margin-bottom: 4px; }
+  .hist-memo { font-size: 12px; color: #888; background: #fafaf0; border-left: 3px solid #EF9F27; padding: 5px 8px; border-radius: 0 6px 6px 0; margin-top: 4px; }
   .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-  .tab { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; background: #eee; color: #888; }
+  .tab { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; background: #eee; color: #888; }
   .tab.active { background: #1D9E75; color: #fff; }
-
   .view { display: none; }
   .view.active { display: block; }
-
   .header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
   .dog-avatar { width: 44px; height: 44px; border-radius: 50%; background: #e1f5ee; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .projection { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .date-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .date-nav button { background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 16px; color: #555; flex-shrink: 0; }
+  .date-nav button:active { background: #e8e8e8; }
+  .date-center { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .date-display { font-size: 15px; font-weight: 600; color: #222; text-align: center; }
+  .date-input-wrap input[type=date] { border: 1px solid #ddd; border-radius: 8px; padding: 5px 8px; font-size: 13px; color: #555; }
+  .realtime-box { background: #e1f5ee; border-radius: 12px; padding: 14px; margin-bottom: 12px; border: 1px solid #b8e8d4; }
+  .realtime-label { font-size: 12px; color: #0F6E56; margin-bottom: 4px; font-weight: 600; }
+  .realtime-val { font-size: 28px; font-weight: 700; color: #0F6E56; }
+  .realtime-sub { font-size: 12px; color: #5aab8a; margin-top: 2px; }
+  .rate-info { font-size: 12px; color: #7dc4a8; margin-top: 6px; }
+  .goal-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .goal-row label { font-size: 14px; color: #555; }
+  .goal-row input { width: 80px; padding: 7px 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; }
+  .ampm-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .ampm-btn { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; background: #fff; color: #aaa; }
+  .ampm-btn.selected { border-color: #1D9E75; color: #1D9E75; background: #e1f5ee; }
+  .hour-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 10px; }
+  .hour-btn { padding: 10px 4px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; background: #fff; color: #555; text-align: center; }
+  .hour-btn.selected { border-color: #1D9E75; color: #fff; background: #1D9E75; }
+  .memo-box { background: #fafaf0; border-left: 3px solid #EF9F27; padding: 10px 12px; border-radius: 0 8px 8px 0; margin-top: 8px; }
+  .memo-box p { font-size: 14px; color: #555; line-height: 1.6; }
+  .memo-edit-row { display: flex; gap: 8px; align-items: flex-start; margin-top: 8px; }
+  .memo-edit-row textarea { flex: 1; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .tag { padding: 6px 12px; border-radius: 20px; border: 1.5px solid #ddd; font-size: 13px; cursor: pointer; background: #fff; color: #777; }
+  .tag.selected { border-color: #1D9E75; background: #e1f5ee; color: #0F6E56; }
 </style>
 </head>
 <body>
@@ -76,8 +83,8 @@
   <div class="header">
     <div class="dog-avatar">🐾</div>
     <div>
-      <h1>두리 음수량 트래커</h1>
-      <div class="subtitle" id="todayLabel"></div>
+      <div style="font-size:18px;font-weight:600;">두리 음수량 트래커</div>
+      <div style="font-size:13px;color:#888;" id="todayLabel"></div>
     </div>
   </div>
 
@@ -94,25 +101,64 @@
       <div class="goal-row">
         <label>하루 목표</label>
         <input type="number" id="goalInput" value="500" min="0" step="10" onchange="saveGoal()" />
-        <span>ml</span>
+        <span style="font-size:14px;color:#888;">ml</span>
+        <span style="font-size:12px;color:#bbb;">(체중kg × 50ml)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">날짜 선택</div>
+      <div class="date-nav">
+        <button onclick="changeDate('input', -1)">◀</button>
+        <div class="date-center">
+          <div class="date-display" id="inputDateDisplay"></div>
+          <div class="date-input-wrap"><input type="date" id="dateInput" onchange="onDateChange('input')" /></div>
+        </div>
+        <button onclick="changeDate('input', 1)">▶</button>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">음수 기록 추가</div>
       <div class="input-group">
-        <label>시간</label>
-        <input type="time" id="timeInput" />
+        <label>오전 / 오후</label>
+        <div class="ampm-row">
+          <button class="ampm-btn" id="amBtn" onclick="selectAmPm('am')">🌅 오전 AM</button>
+          <button class="ampm-btn" id="pmBtn" onclick="selectAmPm('pm')">🌙 오후 PM</button>
+        </div>
+      </div>
+      <div class="input-group">
+        <label id="hourLabel">시각 선택</label>
+        <div class="hour-grid" id="hourGrid"></div>
       </div>
       <div class="input-group">
         <label>마신 양 (ml)</label>
-        <input type="number" id="mlInput" placeholder="예: 100" min="0" step="5" />
+        <input type="number" id="mlInput" placeholder="예: 250" min="0" step="5" />
       </div>
       <button class="btn btn-primary" onclick="addEntry()">기록 추가</button>
     </div>
 
+    <!-- 메모 카드 -->
     <div class="card">
-      <div class="card-title">오늘 기록</div>
+      <div class="card-title">📝 특이사항 메모 <span id="memoDateLabel" style="font-weight:400;color:#aaa;font-size:12px;"></span></div>
+      <div class="tag-row">
+        <button class="tag" onclick="toggleTag('산책')">🚶 산책</button>
+        <button class="tag" onclick="toggleTag('운동장')">⚽ 운동장</button>
+        <button class="tag" onclick="toggleTag('야외활동')">🌳 야외활동</button>
+        <button class="tag" onclick="toggleTag('더운날')">☀️ 더운날</button>
+        <button class="tag" onclick="toggleTag('구토')">🤢 구토</button>
+        <button class="tag" onclick="toggleTag('식욕감소')">🍽️ 식욕감소</button>
+        <button class="tag" onclick="toggleTag('기력저하')">😴 기력저하</button>
+      </div>
+      <div class="input-group">
+        <label>직접 입력</label>
+        <textarea id="memoInput" rows="3" placeholder="예) 오늘 30분 산책, 물 평소보다 많이 마심"></textarea>
+      </div>
+      <button class="btn-sm" onclick="saveMemo()" style="width:100%;padding:10px;border-radius:10px;background:#fff8ee;border:1px solid #EF9F27;color:#854F0B;font-weight:600;font-size:14px;">메모 저장</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">기록 <span id="inputDateLabel" style="font-weight:400;color:#aaa;font-size:12px;"></span></div>
       <ul class="log-list" id="logList"><li class="empty">아직 기록이 없어요</li></ul>
     </div>
   </div>
@@ -120,10 +166,31 @@
   <!-- 확인 탭 -->
   <div class="view" id="tab-view">
     <div class="card">
-      <div class="card-title">오늘 요약</div>
+      <div class="card-title">날짜 선택</div>
+      <div class="date-nav">
+        <button onclick="changeDate('view', -1)">◀</button>
+        <div class="date-center">
+          <div class="date-display" id="viewDateDisplay"></div>
+          <div class="date-input-wrap"><input type="date" id="dateInput2" onchange="onDateChange('view')" /></div>
+        </div>
+        <button onclick="changeDate('view', 1)">▶</button>
+      </div>
+    </div>
+
+    <div id="realtimeBox" style="display:none;">
+      <div class="realtime-box">
+        <div class="realtime-label">⏱ 지금 이 순간 예상 음수량</div>
+        <div class="realtime-val" id="realtimeVal">— ml</div>
+        <div class="realtime-sub" id="realtimeSub"></div>
+        <div class="rate-info" id="rateInfo"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">요약 <span id="viewDateLabel2" style="font-weight:400;color:#aaa;font-size:12px;"></span></div>
       <div class="summary-grid">
         <div class="stat">
-          <div class="stat-label">총 음수량</div>
+          <div class="stat-label">기록된 총 음수량</div>
           <div class="stat-val" id="totalMl">0</div>
           <div class="stat-unit">ml</div>
         </div>
@@ -135,11 +202,15 @@
       </div>
       <div class="bar-bg"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
       <div class="bar-text" id="barText"></div>
-      <div class="projection" id="projection"></div>
+    </div>
+
+    <div class="card" id="viewMemoCard" style="display:none;">
+      <div class="card-title">📝 특이사항</div>
+      <div class="memo-box"><p id="viewMemoText"></p></div>
     </div>
 
     <div class="card">
-      <div class="card-title">오늘 기록</div>
+      <div class="card-title">구간별 기록</div>
       <ul class="log-list" id="logList2"><li class="empty">아직 기록이 없어요</li></ul>
     </div>
   </div>
@@ -147,7 +218,7 @@
   <!-- 히스토리 탭 -->
   <div class="view" id="tab-history">
     <div class="card">
-      <div class="card-title">날짜별 기록</div>
+      <div class="card-title">날짜별 전체 기록</div>
       <div id="historyList"><div class="empty">히스토리 없음</div></div>
     </div>
   </div>
@@ -164,146 +235,328 @@ const firebaseConfig = {
   projectId: "dooree405",
   storageBucket: "dooree405.firebasestorage.app",
   messagingSenderId: "800603847567",
-  appId: "1:800603847567:web:ca9114d3377b8e677ee9fa",
-  measurementId: "G-BJ483GB6HN"
+  appId: "1:800603847567:web:ca9114d3377b8e677ee9fa"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-function todayKey() {
-  return new Date().toISOString().slice(0, 10);
+let allLogs = {};
+let allMemos = {};
+let realtimeTimer = null;
+let selectedAmPm = 'am';
+let selectedHour = 10;
+let selectedTags = new Set();
+
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
-function setNow() {
-  const now = new Date();
-  const h = String(now.getHours()).padStart(2, '0');
-  const m = String(now.getMinutes()).padStart(2, '0');
-  document.getElementById('timeInput').value = h + ':' + m;
+function formatDateKo(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
 }
+
+function hourToLabel(h) {
+  if (h === 0) return '오전 12시';
+  if (h < 12) return `오전 ${h}시`;
+  if (h === 12) return '오후 12시';
+  return `오후 ${h-12}시`;
+}
+
+window.selectAmPm = function(ap) {
+  selectedAmPm = ap;
+  document.getElementById('amBtn').classList.toggle('selected', ap === 'am');
+  document.getElementById('pmBtn').classList.toggle('selected', ap === 'pm');
+  // 반대편 선택된 시각이면 초기화
+  if (ap === 'am' && selectedHour >= 12) selectedHour = 10;
+  if (ap === 'pm' && selectedHour < 12) selectedHour = 22;
+  renderHourGrid();
+};
+
+function renderHourGrid() {
+  const grid = document.getElementById('hourGrid');
+  const hours = selectedAmPm === 'am' ? [0,1,2,3,4,5,6,7,8,9,10,11] : [12,13,14,15,16,17,18,19,20,21,22,23];
+  const labels = { 0:'12시',1:'1시',2:'2시',3:'3시',4:'4시',5:'5시',6:'6시',7:'7시',8:'8시',9:'9시',10:'10시',11:'11시',12:'12시',13:'1시',14:'2시',15:'3시',16:'4시',17:'5시',18:'6시',19:'7시',20:'8시',21:'9시',22:'10시',23:'11시' };
+  grid.innerHTML = hours.map(h =>
+    `<button class="hour-btn${selectedHour===h?' selected':''}" onclick="selectHour(${h})">${labels[h]}</button>`
+  ).join('');
+  document.getElementById('hourLabel').textContent = selectedAmPm === 'am' ? '🌅 오전 시각' : '🌙 오후 시각';
+}
+
+window.selectHour = function(h) { selectedHour = h; renderHourGrid(); };
+
+window.toggleTag = function(tag) {
+  selectedTags.has(tag) ? selectedTags.delete(tag) : selectedTags.add(tag);
+  document.querySelectorAll('.tag').forEach(el => {
+    const t = el.textContent.trim().replace(/^[^\s]+\s/, '');
+    el.classList.toggle('selected', selectedTags.has(tag) && el.onclick.toString().includes(`'${tag}'`));
+  });
+  // 더 간단하게
+  document.querySelectorAll('.tag').forEach(el => {
+    const match = el.getAttribute('onclick').match(/'([^']+)'/);
+    if (match) el.classList.toggle('selected', selectedTags.has(match[1]));
+  });
+};
+
+window.saveMemo = function() {
+  const dateKey = document.getElementById('dateInput').value;
+  const text = document.getElementById('memoInput').value.trim();
+  const tags = Array.from(selectedTags);
+  const combined = [tags.join(' '), text].filter(Boolean).join('\n');
+  if (!combined) { alert('메모를 입력해주세요!'); return; }
+  set(ref(db, `memos/${dateKey}`), combined);
+  alert('✅ 메모 저장 완료!');
+};
+
+function loadMemoForDate(dateKey) {
+  const memo = allMemos[dateKey];
+  document.getElementById('memoInput').value = memo || '';
+  document.getElementById('memoDateLabel').textContent = formatDateKo(dateKey);
+  // 태그 복원
+  selectedTags.clear();
+  if (memo) {
+    const tagNames = ['산책','운동장','야외활동','더운날','구토','식욕감소','기력저하'];
+    tagNames.forEach(t => { if (memo.includes(t)) selectedTags.add(t); });
+  }
+  document.querySelectorAll('.tag').forEach(el => {
+    const match = el.getAttribute('onclick').match(/'([^']+)'/);
+    if (match) el.classList.toggle('selected', selectedTags.has(match[1]));
+  });
+}
+
+function getEntries(dateKey) {
+  const raw = allLogs[dateKey];
+  if (!raw) return [];
+  return Object.entries(raw)
+    .map(([id, v]) => ({ id: Number(id), hour: Number(v.hour), ml: Number(v.ml) }))
+    .sort((a, b) => a.hour - b.hour);
+}
+
+function dateStrDelta(base, delta) {
+  const d = new Date(base + 'T12:00:00');
+  d.setDate(d.getDate() + delta);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function updateDisplay(tab) {
+  const id = tab === 'input' ? 'dateInput' : 'dateInput2';
+  const dateKey = document.getElementById(id).value;
+  const ko = formatDateKo(dateKey);
+  const isToday = dateKey === todayStr();
+  const badge = isToday ? ' <span style="font-size:11px;background:#e1f5ee;color:#0F6E56;padding:2px 8px;border-radius:20px;">오늘</span>' : '';
+  document.getElementById(tab === 'input' ? 'inputDateDisplay' : 'viewDateDisplay').innerHTML = ko + badge;
+  if (tab === 'input') {
+    document.getElementById('inputDateLabel').textContent = ko;
+    loadMemoForDate(dateKey);
+  } else {
+    document.getElementById('viewDateLabel2').textContent = ko;
+  }
+}
+
+function initDates() {
+  const today = todayStr();
+  document.getElementById('dateInput').value = today;
+  document.getElementById('dateInput2').value = today;
+  document.getElementById('todayLabel').textContent = formatDateKo(today);
+  updateDisplay('input');
+  updateDisplay('view');
+}
+
+window.changeDate = function(tab, delta) {
+  const id = tab === 'input' ? 'dateInput' : 'dateInput2';
+  document.getElementById(id).value = dateStrDelta(document.getElementById(id).value, delta);
+  updateDisplay(tab);
+  renderAll();
+};
+
+window.onDateChange = function(tab) { updateDisplay(tab); renderAll(); };
 
 window.saveGoal = function() {
-  const goal = parseInt(document.getElementById('goalInput').value) || 500;
-  set(ref(db, 'goal'), goal);
+  set(ref(db, 'goal'), parseInt(document.getElementById('goalInput').value) || 500);
 };
 
 window.addEntry = function() {
-  const time = document.getElementById('timeInput').value;
   const ml = parseInt(document.getElementById('mlInput').value);
-  if (!time || isNaN(ml) || ml <= 0) {
-    alert('시간과 음수량을 입력해주세요!');
-    return;
-  }
-  const key = todayKey();
-  const id = Date.now();
-  set(ref(db, `logs/${key}/${id}`), { time, ml });
+  const dateKey = document.getElementById('dateInput').value;
+  if (isNaN(ml) || ml <= 0) { alert('마신 양을 입력해주세요!'); return; }
+  set(ref(db, `logs/${dateKey}/${Date.now()}`), { hour: selectedHour, ml });
   document.getElementById('mlInput').value = '';
-  setNow();
-  alert('✅ 기록 완료!');
+  alert(`✅ ${hourToLabel(selectedHour)} ${ml}ml 기록 완료!`);
 };
 
 window.deleteEntry = function(dateKey, id) {
-  if (confirm('이 기록을 삭제할까요?')) {
-    remove(ref(db, `logs/${dateKey}/${id}`));
-  }
+  if (confirm('이 기록을 삭제할까요?')) remove(ref(db, `logs/${dateKey}/${id}`));
 };
 
 window.switchTab = function(name) {
-  document.querySelectorAll('.tab').forEach((t, i) => {
-    t.classList.toggle('active', ['input','view','history'][i] === name);
+  ['input','view','history'].forEach((n, i) => {
+    document.querySelectorAll('.tab')[i].classList.toggle('active', n === name);
+    document.getElementById('tab-' + n).classList.toggle('active', n === name);
   });
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'view') startRealtimeUpdate();
+  else stopRealtimeUpdate();
 };
 
-function renderLogs(entries, todayKey, listId) {
-  const list = document.getElementById(listId);
-  if (!entries || entries.length === 0) {
-    list.innerHTML = '<li class="empty">아직 기록이 없어요</li>';
-    return;
+function calcRealtime(entries) {
+  if (entries.length === 0) return null;
+  const nowHour = new Date().getHours() + new Date().getMinutes() / 60;
+  const last = entries[entries.length - 1];
+  const totalRecorded = entries.reduce((s, e) => s + e.ml, 0);
+  let lastRate = 0;
+  if (entries.length >= 2) {
+    const duration = entries[entries.length-1].hour - entries[entries.length-2].hour;
+    if (duration > 0) lastRate = entries[entries.length-1].ml / duration;
+  } else {
+    lastRate = entries[0].ml / (entries[0].hour || 1);
   }
-  list.innerHTML = entries.map(e =>
-    `<li class="log-item">
-      <span class="log-time">${e.time}</span>
-      <span class="log-ml">${e.ml} ml</span>
-      <button class="log-del" onclick="deleteEntry('${todayKey}', ${e.id})">🗑</button>
-    </li>`
-  ).join('');
+  const goal = parseInt(document.getElementById('goalInput').value) || 500;
+  const currentEstimate = nowHour > last.hour ? Math.round(totalRecorded + lastRate * (nowHour - last.hour)) : totalRecorded;
+  return {
+    currentEstimate,
+    projectedTotal: Math.round(totalRecorded + lastRate * (24 - last.hour)),
+    lastRate: Math.round(lastRate * 10) / 10
+  };
 }
 
-function renderSummary(entries, goal) {
+function startRealtimeUpdate() {
+  stopRealtimeUpdate();
+  updateViewTab();
+  realtimeTimer = setInterval(updateViewTab, 60000);
+}
+
+function stopRealtimeUpdate() {
+  if (realtimeTimer) { clearInterval(realtimeTimer); realtimeTimer = null; }
+}
+
+function updateViewTab() {
+  const dateKey = document.getElementById('dateInput2').value;
+  const goal = parseInt(document.getElementById('goalInput').value) || 500;
+  const entries = getEntries(dateKey);
+  const isToday = dateKey === todayStr();
   const total = entries.reduce((s, e) => s + e.ml, 0);
   const pct = Math.min(Math.round(total / goal * 100), 999);
   document.getElementById('totalMl').textContent = total;
   document.getElementById('pctVal').textContent = pct + '%';
-
-  let statusText = '', badgeClass = '';
-  if (pct >= 100) { statusText = '목표 달성! 🎉'; badgeClass = 'badge-good'; }
-  else if (pct >= 60) { statusText = '잘 하고 있어요'; badgeClass = 'badge-good'; }
-  else if (pct >= 30) { statusText = '조금 더 필요해요'; badgeClass = 'badge-warn'; }
-  else { statusText = '물이 많이 부족해요'; badgeClass = 'badge-bad'; }
-  document.getElementById('statusText').textContent = statusText;
-
+  document.getElementById('statusText').textContent = pct >= 100 ? '목표 달성! 🎉' : pct >= 60 ? '잘 하고 있어요' : pct >= 30 ? '조금 더 필요해요' : '물이 많이 부족해요';
   const fill = document.getElementById('barFill');
   fill.style.width = Math.min(pct, 100) + '%';
   fill.className = 'bar-fill' + (pct >= 100 ? ' over' : pct < 50 ? ' warn' : '');
   document.getElementById('barText').textContent = `${total} / ${goal} ml`;
 
-  if (entries.length >= 2) {
-    const toMin = t => { const [h,m] = t.split(':').map(Number); return h*60+m; };
-    const first = toMin(entries[0].time);
-    const last = toMin(entries[entries.length-1].time);
-    const elapsed = last - first;
-    if (elapsed > 0) {
-      const rate = total / elapsed;
-      const proj = Math.round(total + rate * (23*60 - last));
-      document.getElementById('projection').textContent = `현재 추세로 하루 종일이면 약 ${proj}ml 예상`;
+  // 실시간
+  const rtBox = document.getElementById('realtimeBox');
+  if (isToday && entries.length > 0) {
+    rtBox.style.display = 'block';
+    const rt = calcRealtime(entries);
+    if (rt) {
+      document.getElementById('realtimeVal').textContent = rt.currentEstimate + ' ml';
+      document.getElementById('realtimeSub').textContent = `목표의 ${Math.round(rt.currentEstimate/goal*100)}% · 하루 끝까지 약 ${rt.projectedTotal}ml 예상`;
+      document.getElementById('rateInfo').textContent = `현재 속도: 시간당 약 ${rt.lastRate}ml`;
     }
-  }
+  } else { rtBox.style.display = 'none'; }
+
+  // 메모 표시
+  const memo = allMemos[dateKey];
+  const memoCard = document.getElementById('viewMemoCard');
+  if (memo) {
+    memoCard.style.display = 'block';
+    document.getElementById('viewMemoText').textContent = memo;
+  } else { memoCard.style.display = 'none'; }
+
+  // 구간별 로그
+  const list = document.getElementById('logList2');
+  if (entries.length === 0) { list.innerHTML = '<li class="empty">아직 기록이 없어요</li>'; return; }
+  list.innerHTML = entries.map((e, i) => {
+    const fromHour = i === 0 ? 0 : entries[i-1].hour;
+    const duration = e.hour - fromHour;
+    const rate = duration > 0 ? Math.round(e.ml / duration * 10) / 10 : '—';
+    return `<li class="log-item">
+      <span class="log-time">${hourToLabel(e.hour)}</span>
+      <div style="flex:1;">
+        <div class="log-ml">${e.ml} ml</div>
+        <div class="log-rate">${hourToLabel(fromHour)} ~ ${hourToLabel(e.hour)} (${duration}시간, ${rate}ml/h)</div>
+      </div>
+      <button class="log-del" onclick="deleteEntry('${dateKey}', ${e.id})">🗑</button>
+    </li>`;
+  }).join('');
 }
 
-// 실시간 리스너
-const key = todayKey();
-document.getElementById('todayLabel').textContent = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' });
-setNow();
+function renderInputTab() {
+  const dateKey = document.getElementById('dateInput').value;
+  const entries = getEntries(dateKey);
+  const list = document.getElementById('logList');
+  if (entries.length === 0) { list.innerHTML = '<li class="empty">아직 기록이 없어요</li>'; return; }
+  list.innerHTML = entries.map((e, i) => {
+    const fromHour = i === 0 ? 0 : entries[i-1].hour;
+    const duration = e.hour - fromHour;
+    const rate = duration > 0 ? Math.round(e.ml / duration * 10) / 10 : '—';
+    return `<li class="log-item">
+      <span class="log-time">${hourToLabel(e.hour)}</span>
+      <div style="flex:1;">
+        <div class="log-ml">${e.ml} ml</div>
+        <div class="log-rate">${hourToLabel(fromHour)}~${hourToLabel(e.hour)} (${duration}h, ${rate}ml/h)</div>
+      </div>
+      <button class="log-del" onclick="deleteEntry('${dateKey}', ${e.id})">🗑</button>
+    </li>`;
+  }).join('');
+}
 
-// goal
-onValue(ref(db, 'goal'), snap => {
-  const goal = snap.val() || 500;
-  document.getElementById('goalInput').value = goal;
-});
-
-// today logs
-onValue(ref(db, `logs/${key}`), snap => {
-  const val = snap.val();
-  const entries = val
-    ? Object.entries(val).map(([id, v]) => ({ id: Number(id), ...v })).sort((a, b) => a.time.localeCompare(b.time))
-    : [];
+function renderHistory() {
   const goal = parseInt(document.getElementById('goalInput').value) || 500;
-  renderLogs(entries, key, 'logList');
-  renderLogs(entries, key, 'logList2');
-  renderSummary(entries, goal);
-});
-
-// history
-onValue(ref(db, 'logs'), snap => {
-  const val = snap.val() || {};
-  const goal = parseInt(document.getElementById('goalInput').value) || 500;
-  const keys = Object.keys(val).filter(k => k !== key).sort().reverse();
+  const keys = Object.keys(allLogs).sort().reverse();
   const hist = document.getElementById('historyList');
   if (keys.length === 0) { hist.innerHTML = '<div class="empty">히스토리 없음</div>'; return; }
-  hist.innerHTML = keys.slice(0, 30).map(k => {
-    const entries = Object.values(val[k]);
+  hist.innerHTML = keys.map(k => {
+    const entries = getEntries(k);
     const total = entries.reduce((s, e) => s + e.ml, 0);
     const pct = Math.round(total / goal * 100);
     const color = pct >= 100 ? '#0F6E56' : pct >= 60 ? '#854F0B' : '#A32D2D';
-    const detail = entries.sort((a,b) => a.time.localeCompare(b.time)).map(e => `${e.time} ${e.ml}ml`).join(' · ');
+    const detail = entries.map(e => `${hourToLabel(e.hour)} ${e.ml}ml`).join(' · ');
+    const isToday = k === todayStr();
+    const memo = allMemos[k];
     return `<div class="hist-item">
-      <div class="hist-date">${k.slice(5).replace('-','/')} — <span style="color:${color};font-weight:700">${total}ml</span> (${pct}%)</div>
-      <div class="hist-detail">${detail}</div>
+      <div class="hist-date">${formatDateKo(k)}${isToday ? ' <span style="font-size:11px;background:#e1f5ee;color:#0F6E56;padding:2px 6px;border-radius:10px;">오늘</span>' : ''} — <span style="color:${color};font-weight:700">${total}ml</span> <span style="font-size:12px;color:#bbb;">(${pct}%)</span></div>
+      <div class="hist-detail">${detail || '기록 없음'}</div>
+      ${memo ? `<div class="hist-memo">📝 ${memo}</div>` : ''}
     </div>`;
   }).join('');
+}
+
+function renderAll() {
+  renderInputTab();
+  updateViewTab();
+  renderHistory();
+}
+
+function initHourPicker() {
+  const h = new Date().getHours();
+  selectedHour = h;
+  selectedAmPm = h < 12 ? 'am' : 'pm';
+  document.getElementById('amBtn').classList.toggle('selected', selectedAmPm === 'am');
+  document.getElementById('pmBtn').classList.toggle('selected', selectedAmPm === 'pm');
+  renderHourGrid();
+}
+
+onValue(ref(db, 'goal'), snap => {
+  document.getElementById('goalInput').value = snap.val() || 500;
 });
+
+onValue(ref(db, 'logs'), snap => {
+  allLogs = snap.val() || {};
+  renderAll();
+});
+
+onValue(ref(db, 'memos'), snap => {
+  allMemos = snap.val() || {};
+  renderAll();
+  // 현재 입력탭 날짜 메모 갱신
+  loadMemoForDate(document.getElementById('dateInput').value);
+});
+
+initDates();
+initHourPicker();
 </script>
 </body>
 </html>
