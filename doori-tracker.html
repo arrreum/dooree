@@ -330,6 +330,23 @@ function toKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'
 function dateStrDelta(base,delta){const d=new Date(base+'T12:00:00');d.setDate(d.getDate()+delta);return toKey(d);}
 function getEntries(k){const raw=allLogs[k];if(!raw)return[];return Object.entries(raw).map(([id,v])=>({id:Number(id),hour:Number(v.hour),ml:Number(v.ml)})).sort((a,b)=>a.hour-b.hour);}
 function getDayTotal(k){return getEntries(k).reduce((s,e)=>s+e.ml,0);}
+function getPrevLastHour(dateKey){
+  // 전날 마지막 기록 시각 반환. 없으면 null
+  const d=new Date(dateKey+'T12:00:00');d.setDate(d.getDate()-1);
+  const prevKey=toKey(d);
+  const prevEntries=getEntries(prevKey);
+  return prevEntries.length?prevEntries[prevEntries.length-1].hour:null;
+}
+function getFirstHour(dateKey,entries){
+  // 첫 구간 시작: 전날 마지막 기록 시각. 없으면 0시
+  if(!entries.length)return 0;
+  const prev=getPrevLastHour(dateKey);
+  return prev!==null?prev:0;
+}
+function hourToLabelWithPrev(h, isPrev){
+  const label=hourToLabel(h);
+  return isPrev?`전날 ${label}`:label;
+}
 
 window.selectAmPm=function(ap){
   selectedAmPm=ap;
@@ -426,14 +443,21 @@ window.changeHeatmapMonth=function(delta){
   renderHeatmap();
 };
 
-function calcRealtime(entries){
+function calcRealtime(entries, dateKey){
   if(!entries.length)return null;
   const nowHour=new Date().getHours()+new Date().getMinutes()/60;
   const last=entries[entries.length-1];
   const total=entries.reduce((s,e)=>s+e.ml,0);
   let lastRate=0;
-  if(entries.length>=2){const d=entries[entries.length-1].hour-entries[entries.length-2].hour;if(d>0)lastRate=entries[entries.length-1].ml/d;}
-  else lastRate=entries[0].ml/(entries[0].hour||1);
+  if(entries.length>=2){
+    const d=entries[entries.length-1].hour-entries[entries.length-2].hour;
+    if(d>0)lastRate=entries[entries.length-1].ml/d;
+  } else {
+    // 기록 1개: 전날 마지막 시각 기준으로 rate 계산
+    const prevLast=getPrevLastHour(dateKey);
+    const dur=prevLast!==null?(24-prevLast+entries[0].hour):(entries[0].hour||1);
+    lastRate=entries[0].ml/(dur||1);
+  }
   return{
     currentEstimate:nowHour>last.hour?Math.round(total+lastRate*(nowHour-last.hour)):total,
     projectedTotal:Math.round(total+lastRate*(24-last.hour)),
@@ -460,7 +484,7 @@ function updateViewTab(){
   const rtBox=document.getElementById('realtimeBox');
   if(isToday&&entries.length>0){
     rtBox.style.display='block';
-    const rt=calcRealtime(entries);
+    const rt=calcRealtime(entries,dateKey);
     if(rt){
       document.getElementById('realtimeVal').textContent=rt.currentEstimate+' ml';
       document.getElementById('realtimeSub').textContent=`목표의 ${Math.round(rt.currentEstimate/goal*100)}% · 하루 끝까지 약 ${rt.projectedTotal}ml 예상`;
@@ -473,9 +497,17 @@ function updateViewTab(){
   else memoCard.style.display='none';
   const list=document.getElementById('logList2');
   if(!entries.length){list.innerHTML='<li class="empty">아직 기록이 없어요</li>';return;}
+  const firstHour=getFirstHour(dateKey,entries);
+  const isPrevDay=getPrevLastHour(dateKey)!==null;
   list.innerHTML=entries.map((e,i)=>{
-    const fh=i===0?0:entries[i-1].hour;const dur=e.hour-fh;const rate=dur>0?Math.round(e.ml/dur*10)/10:'—';
-    return `<li class="log-item"><span class="log-time">${hourToLabel(e.hour)}</span><div style="flex:1;"><div class="log-ml">${e.ml} ml</div><div class="log-rate">${hourToLabel(fh)} ~ ${hourToLabel(e.hour)} (${dur}시간, ${rate}ml/h)</div></div><button class="log-del" onclick="deleteEntry('${dateKey}',${e.id})">🗑</button></li>`;
+    const fh=i===0?firstHour:entries[i-1].hour;
+    const isPrev=i===0&&isPrevDay;
+    const dur=i===0?(e.hour+(isPrevDay?24-firstHour:0)-firstHour):e.hour-fh;
+    const durReal=i===0&&isPrevDay?(24-firstHour+e.hour):e.hour-fh;
+    const actualDur=Math.round(durReal*10)/10;
+    const rate=actualDur>0?Math.round(e.ml/actualDur*10)/10:'—';
+    const fromLabel=hourToLabelWithPrev(fh,isPrev);
+    return `<li class="log-item"><span class="log-time">${hourToLabel(e.hour)}</span><div style="flex:1;"><div class="log-ml">${e.ml} ml</div><div class="log-rate">${fromLabel} ~ ${hourToLabel(e.hour)} (${actualDur}시간, ${rate}ml/h)</div></div><button class="log-del" onclick="deleteEntry('${dateKey}',${e.id})">🗑</button></li>`;
   }).join('');
 }
 
@@ -484,9 +516,15 @@ function renderInputTab(){
   const entries=getEntries(dateKey);
   const list=document.getElementById('logList');
   if(!entries.length){list.innerHTML='<li class="empty">아직 기록이 없어요</li>';return;}
+  const firstHour2=getFirstHour(dateKey,entries);
+  const isPrevDay2=getPrevLastHour(dateKey)!==null;
   list.innerHTML=entries.map((e,i)=>{
-    const fh=i===0?0:entries[i-1].hour;const dur=e.hour-fh;const rate=dur>0?Math.round(e.ml/dur*10)/10:'—';
-    return `<li class="log-item"><span class="log-time">${hourToLabel(e.hour)}</span><div style="flex:1;"><div class="log-ml">${e.ml} ml</div><div class="log-rate">${hourToLabel(fh)}~${hourToLabel(e.hour)} (${dur}h, ${rate}ml/h)</div></div><button class="log-del" onclick="deleteEntry('${dateKey}',${e.id})">🗑</button></li>`;
+    const fh=i===0?firstHour2:entries[i-1].hour;
+    const isPrev=i===0&&isPrevDay2;
+    const actualDur=i===0&&isPrevDay2?(24-firstHour2+e.hour):e.hour-fh;
+    const rate=actualDur>0?Math.round(e.ml/actualDur*10)/10:'—';
+    const fromLabel=hourToLabelWithPrev(fh,isPrev);
+    return `<li class="log-item"><span class="log-time">${hourToLabel(e.hour)}</span><div style="flex:1;"><div class="log-ml">${e.ml} ml</div><div class="log-rate">${fromLabel}~${hourToLabel(e.hour)} (${actualDur}h, ${rate}ml/h)</div></div><button class="log-del" onclick="deleteEntry('${dateKey}',${e.id})">🗑</button></li>`;
   }).join('');
 }
 
