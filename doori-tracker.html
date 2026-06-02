@@ -17,8 +17,6 @@
   .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
   .btn-primary { background: #1D9E75; color: #fff; }
   .btn-primary:active { background: #178060; }
-  .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 8px; border: 1px solid #ddd; background: #fff; cursor: pointer; color: #555; width: auto; }
-  .btn-sm:active { background: #f0f0f0; }
   .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .stat { background: #f7f7f7; border-radius: 10px; padding: 12px; text-align: center; }
   .stat-label { font-size: 12px; color: #999; margin-bottom: 4px; }
@@ -28,7 +26,7 @@
   .bar-fill { height: 12px; border-radius: 8px; background: #1D9E75; transition: width 0.5s; }
   .bar-fill.warn { background: #EF9F27; }
   .bar-fill.over { background: #E24B4A; }
-  .bar-text { font-size: 12px; color: #aaa; text-align: right; margin-bottom: 4px; }
+  .bar-text { font-size: 12px; color: #aaa; text-align: right; }
   .log-list { list-style: none; }
   .log-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; gap: 8px; }
   .log-item:last-child { border-bottom: none; }
@@ -37,11 +35,6 @@
   .log-rate { font-size: 12px; color: #aaa; }
   .log-del { background: none; border: none; font-size: 18px; color: #ccc; cursor: pointer; padding: 0 4px; }
   .empty { text-align: center; color: #ccc; font-size: 14px; padding: 20px 0; }
-  .hist-item { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
-  .hist-item:last-child { border-bottom: none; }
-  .hist-date { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 3px; }
-  .hist-detail { font-size: 12px; color: #aaa; margin-bottom: 4px; }
-  .hist-memo { font-size: 12px; color: #888; background: #fafaf0; border-left: 3px solid #EF9F27; padding: 5px 8px; border-radius: 0 6px 6px 0; margin-top: 4px; }
   .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
   .tab { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; background: #eee; color: #888; }
   .tab.active { background: #1D9E75; color: #fff; }
@@ -69,13 +62,61 @@
   .hour-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 10px; }
   .hour-btn { padding: 10px 4px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; background: #fff; color: #555; text-align: center; }
   .hour-btn.selected { border-color: #1D9E75; color: #fff; background: #1D9E75; }
-  .memo-box { background: #fafaf0; border-left: 3px solid #EF9F27; padding: 10px 12px; border-radius: 0 8px 8px 0; margin-top: 8px; }
-  .memo-box p { font-size: 14px; color: #555; line-height: 1.6; }
-  .memo-edit-row { display: flex; gap: 8px; align-items: flex-start; margin-top: 8px; }
-  .memo-edit-row textarea { flex: 1; }
+  .memo-box { background: #fafaf0; border-left: 3px solid #EF9F27; padding: 10px 12px; border-radius: 0 8px 8px 0; }
   .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
   .tag { padding: 6px 12px; border-radius: 20px; border: 1.5px solid #ddd; font-size: 13px; cursor: pointer; background: #fff; color: #777; }
   .tag.selected { border-color: #1D9E75; background: #e1f5ee; color: #0F6E56; }
+  .hist-item { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+  .hist-item:last-child { border-bottom: none; }
+  .hist-date { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 3px; }
+  .hist-detail { font-size: 12px; color: #aaa; }
+  .hist-memo { font-size: 12px; color: #888; background: #fafaf0; border-left: 3px solid #EF9F27; padding: 5px 8px; border-radius: 0 6px 6px 0; margin-top: 4px; }
+
+  /* 통계 */
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+  .mini-stat { background: #f7f7f7; border-radius: 10px; padding: 10px 6px; text-align: center; }
+  .mini-stat .val { font-size: 17px; font-weight: 700; color: #222; }
+  .mini-stat .lbl { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .mini-stat .sub { font-size: 10px; color: #bbb; margin-top: 1px; }
+
+  /* 바 차트 */
+  .bar-chart-wrap { position: relative; height: 140px; margin-bottom: 4px; }
+  .bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 110px; position: absolute; bottom: 20px; left: 0; right: 0; }
+  .chart-bar-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; flex: 1; height: 110px; }
+  .chart-bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 2px; }
+  .chart-bar.c-green { background: #1D9E75; }
+  .chart-bar.c-amber { background: #EF9F27; }
+  .chart-bar.c-light { background: #f0cfc0; }
+  .chart-bar.c-empty { background: #f0f0f0; }
+  .chart-bar-label { font-size: 9px; color: #bbb; margin-top: 3px; }
+  .chart-goal-line { position: absolute; left: 0; right: 0; border-top: 1.5px dashed #E24B4A; opacity: 0.6; pointer-events: none; }
+  .chart-goal-tag { position: absolute; right: 0; font-size: 9px; color: #E24B4A; background: #fff; padding: 0 2px; }
+
+  /* 달력 히트맵 */
+  .heatmap-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .heatmap-nav button { background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 5px 12px; cursor: pointer; font-size: 15px; color: #555; }
+  .heatmap-nav button:active { background: #eee; }
+  .heatmap-month-title { font-size: 14px; font-weight: 600; color: #333; }
+  .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .heatmap-dow { font-size: 10px; color: #bbb; text-align: center; padding: 3px 0; }
+  .heatmap-cell { aspect-ratio: 1; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+  .heatmap-cell.empty { background: transparent; }
+  .heatmap-cell.future { background: transparent; color: #ddd; }
+  .heatmap-cell.c0 { background: #f0f0f0; color: #ccc; }
+  .heatmap-cell.c1 { background: #9FE1CB; color: #085041; }
+  .heatmap-cell.c2 { background: #5DCAA5; color: #085041; }
+  .heatmap-cell.c3 { background: #1D9E75; color: #fff; }
+  .heatmap-cell.c4 { background: #0F6E56; color: #fff; }
+  .heatmap-cell.today-ring { outline: 2px solid #E24B4A; outline-offset: 1px; border-radius: 5px; }
+  .heatmap-legend { display: flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 11px; color: #aaa; }
+  .legend-cell { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+
+  /* 접을 수 있는 섹션 */
+  .collapsible-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 4px 0; }
+  .collapsible-header .arrow { font-size: 12px; color: #aaa; transition: transform 0.2s; }
+  .collapsible-header.open .arrow { transform: rotate(180deg); }
+  .collapsible-body { overflow: hidden; transition: max-height 0.3s ease; max-height: 0; }
+  .collapsible-body.open { max-height: 3000px; }
 </style>
 </head>
 <body>
@@ -105,19 +146,17 @@
         <span style="font-size:12px;color:#bbb;">(체중kg × 50ml)</span>
       </div>
     </div>
-
     <div class="card">
       <div class="card-title">날짜 선택</div>
       <div class="date-nav">
-        <button onclick="changeDate('input', -1)">◀</button>
+        <button onclick="changeDate('input',-1)">◀</button>
         <div class="date-center">
           <div class="date-display" id="inputDateDisplay"></div>
           <div class="date-input-wrap"><input type="date" id="dateInput" onchange="onDateChange('input')" /></div>
         </div>
-        <button onclick="changeDate('input', 1)">▶</button>
+        <button onclick="changeDate('input',1)">▶</button>
       </div>
     </div>
-
     <div class="card">
       <div class="card-title">음수 기록 추가</div>
       <div class="input-group">
@@ -137,8 +176,6 @@
       </div>
       <button class="btn btn-primary" onclick="addEntry()">기록 추가</button>
     </div>
-
-    <!-- 메모 카드 -->
     <div class="card">
       <div class="card-title">📝 특이사항 메모 <span id="memoDateLabel" style="font-weight:400;color:#aaa;font-size:12px;"></span></div>
       <div class="tag-row">
@@ -152,11 +189,10 @@
       </div>
       <div class="input-group">
         <label>직접 입력</label>
-        <textarea id="memoInput" rows="3" placeholder="예) 오늘 30분 산책, 물 평소보다 많이 마심"></textarea>
+        <textarea id="memoInput" rows="3" placeholder="예) 30분 산책, 물 평소보다 많이 마심"></textarea>
       </div>
-      <button class="btn-sm" onclick="saveMemo()" style="width:100%;padding:10px;border-radius:10px;background:#fff8ee;border:1px solid #EF9F27;color:#854F0B;font-weight:600;font-size:14px;">메모 저장</button>
+      <button onclick="saveMemo()" style="width:100%;padding:10px;border-radius:10px;background:#fff8ee;border:1px solid #EF9F27;color:#854F0B;font-weight:600;font-size:14px;cursor:pointer;">메모 저장</button>
     </div>
-
     <div class="card">
       <div class="card-title">기록 <span id="inputDateLabel" style="font-weight:400;color:#aaa;font-size:12px;"></span></div>
       <ul class="log-list" id="logList"><li class="empty">아직 기록이 없어요</li></ul>
@@ -168,15 +204,14 @@
     <div class="card">
       <div class="card-title">날짜 선택</div>
       <div class="date-nav">
-        <button onclick="changeDate('view', -1)">◀</button>
+        <button onclick="changeDate('view',-1)">◀</button>
         <div class="date-center">
           <div class="date-display" id="viewDateDisplay"></div>
           <div class="date-input-wrap"><input type="date" id="dateInput2" onchange="onDateChange('view')" /></div>
         </div>
-        <button onclick="changeDate('view', 1)">▶</button>
+        <button onclick="changeDate('view',1)">▶</button>
       </div>
     </div>
-
     <div id="realtimeBox" style="display:none;">
       <div class="realtime-box">
         <div class="realtime-label">⏱ 지금 이 순간 예상 음수량</div>
@@ -185,30 +220,19 @@
         <div class="rate-info" id="rateInfo"></div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-title">요약 <span id="viewDateLabel2" style="font-weight:400;color:#aaa;font-size:12px;"></span></div>
       <div class="summary-grid">
-        <div class="stat">
-          <div class="stat-label">기록된 총 음수량</div>
-          <div class="stat-val" id="totalMl">0</div>
-          <div class="stat-unit">ml</div>
-        </div>
-        <div class="stat">
-          <div class="stat-label">목표 달성률</div>
-          <div class="stat-val" id="pctVal">0%</div>
-          <div class="stat-unit" id="statusText">—</div>
-        </div>
+        <div class="stat"><div class="stat-label">총 음수량</div><div class="stat-val" id="totalMl">0</div><div class="stat-unit">ml</div></div>
+        <div class="stat"><div class="stat-label">목표 달성률</div><div class="stat-val" id="pctVal">0%</div><div class="stat-unit" id="statusText">—</div></div>
       </div>
       <div class="bar-bg"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
       <div class="bar-text" id="barText"></div>
     </div>
-
     <div class="card" id="viewMemoCard" style="display:none;">
       <div class="card-title">📝 특이사항</div>
       <div class="memo-box"><p id="viewMemoText"></p></div>
     </div>
-
     <div class="card">
       <div class="card-title">구간별 기록</div>
       <ul class="log-list" id="logList2"><li class="empty">아직 기록이 없어요</li></ul>
@@ -218,8 +242,63 @@
   <!-- 히스토리 탭 -->
   <div class="view" id="tab-history">
     <div class="card">
-      <div class="card-title">날짜별 전체 기록</div>
-      <div id="historyList"><div class="empty">히스토리 없음</div></div>
+      <div class="card-title">📈 전체 통계</div>
+      <div class="stats-row" style="margin-bottom:8px;">
+        <div class="mini-stat"><div class="val" id="avgVal">—</div><div class="lbl">일 평균</div><div class="sub">ml</div></div>
+        <div class="mini-stat"><div class="val" style="color:#1D9E75;" id="bestVal">—</div><div class="lbl">최고 기록</div><div class="sub" id="bestDate"></div></div>
+        <div class="mini-stat"><div class="val" style="color:#E24B4A;" id="streakVal">—</div><div class="lbl">연속 달성</div><div class="sub">🔥</div></div>
+        <div class="mini-stat"><div class="val" id="achieveRateVal">—</div><div class="lbl">달성률</div><div class="sub">%</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="mini-stat"><div class="val" id="weekAvgVal">—</div><div class="lbl">이번주</div><div class="sub">평균ml</div></div>
+        <div class="mini-stat"><div class="val" id="prevWeekAvgVal">—</div><div class="lbl">지난주</div><div class="sub" id="weekTrend"></div></div>
+        <div class="mini-stat"><div class="val" id="goalDaysVal">—</div><div class="lbl">목표 달성</div><div class="sub">일수</div></div>
+        <div class="mini-stat"><div class="val" id="totalDaysVal">—</div><div class="lbl">기록 일수</div><div class="sub">일</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 최근 14일 추이</div>
+      <div class="bar-chart-wrap">
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+      <div style="display:flex;gap:10px;font-size:11px;color:#aaa;margin-top:4px;">
+        <span><span style="display:inline-block;width:9px;height:9px;background:#1D9E75;border-radius:2px;margin-right:2px;"></span>달성</span>
+        <span><span style="display:inline-block;width:9px;height:9px;background:#EF9F27;border-radius:2px;margin-right:2px;"></span>60%↑</span>
+        <span><span style="display:inline-block;width:9px;height:9px;background:#f0cfc0;border-radius:2px;margin-right:2px;"></span>60%↓</span>
+        <span><span style="display:inline-block;width:9px;height:9px;border:1px dashed #E24B4A;border-radius:2px;margin-right:2px;"></span>목표선</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗓 달력</div>
+      <div class="heatmap-nav">
+        <button onclick="changeHeatmapMonth(-1)">◀</button>
+        <div class="heatmap-month-title" id="heatmapTitle"></div>
+        <button onclick="changeHeatmapMonth(1)">▶</button>
+      </div>
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+      <div class="heatmap-legend">
+        <span>적음</span>
+        <div class="legend-cell" style="background:#f0f0f0;"></div>
+        <div class="legend-cell" style="background:#9FE1CB;"></div>
+        <div class="legend-cell" style="background:#5DCAA5;"></div>
+        <div class="legend-cell" style="background:#1D9E75;"></div>
+        <div class="legend-cell" style="background:#0F6E56;"></div>
+        <span>목표↑</span>
+      </div>
+    </div>
+
+    <div class="card" style="padding:0;">
+      <div class="collapsible-header" id="histToggle" onclick="toggleHist()" style="padding:16px;">
+        <span class="card-title" style="margin:0;">날짜별 기록</span>
+        <span class="arrow" id="histArrow">▼</span>
+      </div>
+      <div class="collapsible-body" id="histBody">
+        <div style="padding: 0 16px 16px;">
+          <div id="historyList"><div class="empty">히스토리 없음</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -237,326 +316,283 @@ const firebaseConfig = {
   messagingSenderId: "800603847567",
   appId: "1:800603847567:web:ca9114d3377b8e677ee9fa"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let allLogs = {};
-let allMemos = {};
-let realtimeTimer = null;
-let selectedAmPm = 'am';
-let selectedHour = 10;
-let selectedTags = new Set();
+let allLogs={}, allMemos={}, realtimeTimer=null;
+let selectedAmPm='am', selectedHour=10, selectedTags=new Set();
+let heatmapYear, heatmapMonth;
 
-function todayStr() {
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function formatDateKo(s){return new Date(s+'T00:00:00').toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'short'});}
+function hourToLabel(h){if(h===0)return '오전12시';if(h<12)return `오전${h}시`;if(h===12)return '오후12시';return `오후${h-12}시`;}
+function toKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function dateStrDelta(base,delta){const d=new Date(base+'T12:00:00');d.setDate(d.getDate()+delta);return toKey(d);}
+function getEntries(k){const raw=allLogs[k];if(!raw)return[];return Object.entries(raw).map(([id,v])=>({id:Number(id),hour:Number(v.hour),ml:Number(v.ml)})).sort((a,b)=>a.hour-b.hour);}
+function getDayTotal(k){return getEntries(k).reduce((s,e)=>s+e.ml,0);}
 
-function formatDateKo(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
-}
-
-function hourToLabel(h) {
-  if (h === 0) return '오전 12시';
-  if (h < 12) return `오전 ${h}시`;
-  if (h === 12) return '오후 12시';
-  return `오후 ${h-12}시`;
-}
-
-window.selectAmPm = function(ap) {
-  selectedAmPm = ap;
-  document.getElementById('amBtn').classList.toggle('selected', ap === 'am');
-  document.getElementById('pmBtn').classList.toggle('selected', ap === 'pm');
-  // 반대편 선택된 시각이면 초기화
-  if (ap === 'am' && selectedHour >= 12) selectedHour = 10;
-  if (ap === 'pm' && selectedHour < 12) selectedHour = 22;
+window.selectAmPm=function(ap){
+  selectedAmPm=ap;
+  document.getElementById('amBtn').classList.toggle('selected',ap==='am');
+  document.getElementById('pmBtn').classList.toggle('selected',ap==='pm');
+  if(ap==='am'&&selectedHour>=12)selectedHour=10;
+  if(ap==='pm'&&selectedHour<12)selectedHour=22;
   renderHourGrid();
 };
-
-function renderHourGrid() {
-  const grid = document.getElementById('hourGrid');
-  const hours = selectedAmPm === 'am' ? [0,1,2,3,4,5,6,7,8,9,10,11] : [12,13,14,15,16,17,18,19,20,21,22,23];
-  const labels = { 0:'12시',1:'1시',2:'2시',3:'3시',4:'4시',5:'5시',6:'6시',7:'7시',8:'8시',9:'9시',10:'10시',11:'11시',12:'12시',13:'1시',14:'2시',15:'3시',16:'4시',17:'5시',18:'6시',19:'7시',20:'8시',21:'9시',22:'10시',23:'11시' };
-  grid.innerHTML = hours.map(h =>
-    `<button class="hour-btn${selectedHour===h?' selected':''}" onclick="selectHour(${h})">${labels[h]}</button>`
-  ).join('');
-  document.getElementById('hourLabel').textContent = selectedAmPm === 'am' ? '🌅 오전 시각' : '🌙 오후 시각';
+function renderHourGrid(){
+  const hours=selectedAmPm==='am'?[0,1,2,3,4,5,6,7,8,9,10,11]:[12,13,14,15,16,17,18,19,20,21,22,23];
+  const labels={0:'12시',1:'1시',2:'2시',3:'3시',4:'4시',5:'5시',6:'6시',7:'7시',8:'8시',9:'9시',10:'10시',11:'11시',12:'12시',13:'1시',14:'2시',15:'3시',16:'4시',17:'5시',18:'6시',19:'7시',20:'8시',21:'9시',22:'10시',23:'11시'};
+  document.getElementById('hourGrid').innerHTML=hours.map(h=>`<button class="hour-btn${selectedHour===h?' selected':''}" onclick="selectHour(${h})">${labels[h]}</button>`).join('');
+  document.getElementById('hourLabel').textContent=selectedAmPm==='am'?'🌅 오전 시각':'🌙 오후 시각';
 }
-
-window.selectHour = function(h) { selectedHour = h; renderHourGrid(); };
-
-window.toggleTag = function(tag) {
-  selectedTags.has(tag) ? selectedTags.delete(tag) : selectedTags.add(tag);
-  document.querySelectorAll('.tag').forEach(el => {
-    const t = el.textContent.trim().replace(/^[^\s]+\s/, '');
-    el.classList.toggle('selected', selectedTags.has(tag) && el.onclick.toString().includes(`'${tag}'`));
-  });
-  // 더 간단하게
-  document.querySelectorAll('.tag').forEach(el => {
-    const match = el.getAttribute('onclick').match(/'([^']+)'/);
-    if (match) el.classList.toggle('selected', selectedTags.has(match[1]));
-  });
+window.selectHour=function(h){selectedHour=h;renderHourGrid();};
+window.toggleTag=function(tag){
+  selectedTags.has(tag)?selectedTags.delete(tag):selectedTags.add(tag);
+  document.querySelectorAll('.tag').forEach(el=>{const m=el.getAttribute('onclick').match(/'([^']+)'/);if(m)el.classList.toggle('selected',selectedTags.has(m[1]));});
 };
-
-window.saveMemo = function() {
-  const dateKey = document.getElementById('dateInput').value;
-  const text = document.getElementById('memoInput').value.trim();
-  const tags = Array.from(selectedTags);
-  const combined = [tags.join(' '), text].filter(Boolean).join('\n');
-  if (!combined) { alert('메모를 입력해주세요!'); return; }
-  set(ref(db, `memos/${dateKey}`), combined);
-  alert('✅ 메모 저장 완료!');
+window.saveMemo=function(){
+  const dateKey=document.getElementById('dateInput').value;
+  const text=document.getElementById('memoInput').value.trim();
+  const combined=[Array.from(selectedTags).join(' '),text].filter(Boolean).join('\n');
+  if(!combined){alert('메모를 입력해주세요!');return;}
+  set(ref(db,`memos/${dateKey}`),combined);alert('✅ 메모 저장 완료!');
 };
-
-function loadMemoForDate(dateKey) {
-  const memo = allMemos[dateKey];
-  document.getElementById('memoInput').value = memo || '';
-  document.getElementById('memoDateLabel').textContent = formatDateKo(dateKey);
-  // 태그 복원
+function loadMemoForDate(dateKey){
+  const memo=allMemos[dateKey];
+  document.getElementById('memoInput').value=memo||'';
+  document.getElementById('memoDateLabel').textContent=formatDateKo(dateKey);
   selectedTags.clear();
-  if (memo) {
-    const tagNames = ['산책','운동장','야외활동','더운날','구토','식욕감소','기력저하'];
-    tagNames.forEach(t => { if (memo.includes(t)) selectedTags.add(t); });
-  }
-  document.querySelectorAll('.tag').forEach(el => {
-    const match = el.getAttribute('onclick').match(/'([^']+)'/);
-    if (match) el.classList.toggle('selected', selectedTags.has(match[1]));
-  });
+  if(memo)['산책','운동장','야외활동','더운날','구토','식욕감소','기력저하'].forEach(t=>{if(memo.includes(t))selectedTags.add(t);});
+  document.querySelectorAll('.tag').forEach(el=>{const m=el.getAttribute('onclick').match(/'([^']+)'/);if(m)el.classList.toggle('selected',selectedTags.has(m[1]));});
 }
-
-function getEntries(dateKey) {
-  const raw = allLogs[dateKey];
-  if (!raw) return [];
-  return Object.entries(raw)
-    .map(([id, v]) => ({ id: Number(id), hour: Number(v.hour), ml: Number(v.ml) }))
-    .sort((a, b) => a.hour - b.hour);
+function updateDisplay(tab){
+  const id=tab==='input'?'dateInput':'dateInput2';
+  const dateKey=document.getElementById(id).value;
+  const ko=formatDateKo(dateKey);
+  const isToday=dateKey===todayStr();
+  const badge=isToday?' <span style="font-size:11px;background:#e1f5ee;color:#0F6E56;padding:2px 8px;border-radius:20px;">오늘</span>':'';
+  document.getElementById(tab==='input'?'inputDateDisplay':'viewDateDisplay').innerHTML=ko+badge;
+  if(tab==='input'){document.getElementById('inputDateLabel').textContent=ko;loadMemoForDate(dateKey);}
+  else document.getElementById('viewDateLabel2').textContent=ko;
 }
-
-function dateStrDelta(base, delta) {
-  const d = new Date(base + 'T12:00:00');
-  d.setDate(d.getDate() + delta);
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+function initDates(){
+  const today=todayStr();
+  document.getElementById('dateInput').value=today;
+  document.getElementById('dateInput2').value=today;
+  document.getElementById('todayLabel').textContent=formatDateKo(today);
+  const now=new Date();
+  heatmapYear=now.getFullYear(); heatmapMonth=now.getMonth();
+  updateDisplay('input');updateDisplay('view');
 }
-
-function updateDisplay(tab) {
-  const id = tab === 'input' ? 'dateInput' : 'dateInput2';
-  const dateKey = document.getElementById(id).value;
-  const ko = formatDateKo(dateKey);
-  const isToday = dateKey === todayStr();
-  const badge = isToday ? ' <span style="font-size:11px;background:#e1f5ee;color:#0F6E56;padding:2px 8px;border-radius:20px;">오늘</span>' : '';
-  document.getElementById(tab === 'input' ? 'inputDateDisplay' : 'viewDateDisplay').innerHTML = ko + badge;
-  if (tab === 'input') {
-    document.getElementById('inputDateLabel').textContent = ko;
-    loadMemoForDate(dateKey);
-  } else {
-    document.getElementById('viewDateLabel2').textContent = ko;
-  }
-}
-
-function initDates() {
-  const today = todayStr();
-  document.getElementById('dateInput').value = today;
-  document.getElementById('dateInput2').value = today;
-  document.getElementById('todayLabel').textContent = formatDateKo(today);
-  updateDisplay('input');
-  updateDisplay('view');
-}
-
-window.changeDate = function(tab, delta) {
-  const id = tab === 'input' ? 'dateInput' : 'dateInput2';
-  document.getElementById(id).value = dateStrDelta(document.getElementById(id).value, delta);
-  updateDisplay(tab);
-  renderAll();
+window.changeDate=function(tab,delta){
+  const id=tab==='input'?'dateInput':'dateInput2';
+  document.getElementById(id).value=dateStrDelta(document.getElementById(id).value,delta);
+  updateDisplay(tab);renderAll();
 };
-
-window.onDateChange = function(tab) { updateDisplay(tab); renderAll(); };
-
-window.saveGoal = function() {
-  set(ref(db, 'goal'), parseInt(document.getElementById('goalInput').value) || 500);
-};
-
-window.addEntry = function() {
-  const ml = parseInt(document.getElementById('mlInput').value);
-  const dateKey = document.getElementById('dateInput').value;
-  if (isNaN(ml) || ml <= 0) { alert('마신 양을 입력해주세요!'); return; }
-  set(ref(db, `logs/${dateKey}/${Date.now()}`), { hour: selectedHour, ml });
-  document.getElementById('mlInput').value = '';
+window.onDateChange=function(tab){updateDisplay(tab);renderAll();};
+window.saveGoal=function(){set(ref(db,'goal'),parseInt(document.getElementById('goalInput').value)||500);};
+window.addEntry=function(){
+  const ml=parseInt(document.getElementById('mlInput').value);
+  const dateKey=document.getElementById('dateInput').value;
+  if(isNaN(ml)||ml<=0){alert('마신 양을 입력해주세요!');return;}
+  set(ref(db,`logs/${dateKey}/${Date.now()}`),{hour:selectedHour,ml});
+  document.getElementById('mlInput').value='';
   alert(`✅ ${hourToLabel(selectedHour)} ${ml}ml 기록 완료!`);
 };
-
-window.deleteEntry = function(dateKey, id) {
-  if (confirm('이 기록을 삭제할까요?')) remove(ref(db, `logs/${dateKey}/${id}`));
-};
-
-window.switchTab = function(name) {
-  ['input','view','history'].forEach((n, i) => {
-    document.querySelectorAll('.tab')[i].classList.toggle('active', n === name);
-    document.getElementById('tab-' + n).classList.toggle('active', n === name);
+window.deleteEntry=function(dateKey,id){if(confirm('삭제할까요?'))remove(ref(db,`logs/${dateKey}/${id}`));};
+window.switchTab=function(name){
+  ['input','view','history'].forEach((n,i)=>{
+    document.querySelectorAll('.tab')[i].classList.toggle('active',n===name);
+    document.getElementById('tab-'+n).classList.toggle('active',n===name);
   });
-  if (name === 'view') startRealtimeUpdate();
-  else stopRealtimeUpdate();
+  if(name==='view')startRealtimeUpdate();else stopRealtimeUpdate();
 };
 
-function calcRealtime(entries) {
-  if (entries.length === 0) return null;
-  const nowHour = new Date().getHours() + new Date().getMinutes() / 60;
-  const last = entries[entries.length - 1];
-  const totalRecorded = entries.reduce((s, e) => s + e.ml, 0);
-  let lastRate = 0;
-  if (entries.length >= 2) {
-    const duration = entries[entries.length-1].hour - entries[entries.length-2].hour;
-    if (duration > 0) lastRate = entries[entries.length-1].ml / duration;
-  } else {
-    lastRate = entries[0].ml / (entries[0].hour || 1);
-  }
-  const goal = parseInt(document.getElementById('goalInput').value) || 500;
-  const currentEstimate = nowHour > last.hour ? Math.round(totalRecorded + lastRate * (nowHour - last.hour)) : totalRecorded;
-  return {
-    currentEstimate,
-    projectedTotal: Math.round(totalRecorded + lastRate * (24 - last.hour)),
-    lastRate: Math.round(lastRate * 10) / 10
+// 히스토리 접기
+window.toggleHist=function(){
+  const body=document.getElementById('histBody');
+  const header=document.getElementById('histToggle');
+  const arrow=document.getElementById('histArrow');
+  const open=body.classList.toggle('open');
+  header.classList.toggle('open',open);
+  arrow.textContent=open?'▲':'▼';
+};
+
+// 달력 월 이동
+window.changeHeatmapMonth=function(delta){
+  heatmapMonth+=delta;
+  if(heatmapMonth>11){heatmapMonth=0;heatmapYear++;}
+  if(heatmapMonth<0){heatmapMonth=11;heatmapYear--;}
+  renderHeatmap();
+};
+
+function calcRealtime(entries){
+  if(!entries.length)return null;
+  const nowHour=new Date().getHours()+new Date().getMinutes()/60;
+  const last=entries[entries.length-1];
+  const total=entries.reduce((s,e)=>s+e.ml,0);
+  let lastRate=0;
+  if(entries.length>=2){const d=entries[entries.length-1].hour-entries[entries.length-2].hour;if(d>0)lastRate=entries[entries.length-1].ml/d;}
+  else lastRate=entries[0].ml/(entries[0].hour||1);
+  return{
+    currentEstimate:nowHour>last.hour?Math.round(total+lastRate*(nowHour-last.hour)):total,
+    projectedTotal:Math.round(total+lastRate*(24-last.hour)),
+    lastRate:Math.round(lastRate*10)/10
   };
 }
+function startRealtimeUpdate(){stopRealtimeUpdate();updateViewTab();realtimeTimer=setInterval(updateViewTab,60000);}
+function stopRealtimeUpdate(){if(realtimeTimer){clearInterval(realtimeTimer);realtimeTimer=null;}}
 
-function startRealtimeUpdate() {
-  stopRealtimeUpdate();
-  updateViewTab();
-  realtimeTimer = setInterval(updateViewTab, 60000);
-}
-
-function stopRealtimeUpdate() {
-  if (realtimeTimer) { clearInterval(realtimeTimer); realtimeTimer = null; }
-}
-
-function updateViewTab() {
-  const dateKey = document.getElementById('dateInput2').value;
-  const goal = parseInt(document.getElementById('goalInput').value) || 500;
-  const entries = getEntries(dateKey);
-  const isToday = dateKey === todayStr();
-  const total = entries.reduce((s, e) => s + e.ml, 0);
-  const pct = Math.min(Math.round(total / goal * 100), 999);
-  document.getElementById('totalMl').textContent = total;
-  document.getElementById('pctVal').textContent = pct + '%';
-  document.getElementById('statusText').textContent = pct >= 100 ? '목표 달성! 🎉' : pct >= 60 ? '잘 하고 있어요' : pct >= 30 ? '조금 더 필요해요' : '물이 많이 부족해요';
-  const fill = document.getElementById('barFill');
-  fill.style.width = Math.min(pct, 100) + '%';
-  fill.className = 'bar-fill' + (pct >= 100 ? ' over' : pct < 50 ? ' warn' : '');
-  document.getElementById('barText').textContent = `${total} / ${goal} ml`;
-
-  // 실시간
-  const rtBox = document.getElementById('realtimeBox');
-  if (isToday && entries.length > 0) {
-    rtBox.style.display = 'block';
-    const rt = calcRealtime(entries);
-    if (rt) {
-      document.getElementById('realtimeVal').textContent = rt.currentEstimate + ' ml';
-      document.getElementById('realtimeSub').textContent = `목표의 ${Math.round(rt.currentEstimate/goal*100)}% · 하루 끝까지 약 ${rt.projectedTotal}ml 예상`;
-      document.getElementById('rateInfo').textContent = `현재 속도: 시간당 약 ${rt.lastRate}ml`;
+function updateViewTab(){
+  const dateKey=document.getElementById('dateInput2').value;
+  const goal=parseInt(document.getElementById('goalInput').value)||500;
+  const entries=getEntries(dateKey);
+  const isToday=dateKey===todayStr();
+  const total=entries.reduce((s,e)=>s+e.ml,0);
+  const pct=Math.min(Math.round(total/goal*100),999);
+  document.getElementById('totalMl').textContent=total;
+  document.getElementById('pctVal').textContent=pct+'%';
+  document.getElementById('statusText').textContent=pct>=100?'목표 달성! 🎉':pct>=60?'잘 하고 있어요':pct>=30?'조금 더 필요해요':'물이 많이 부족해요';
+  const fill=document.getElementById('barFill');
+  fill.style.width=Math.min(pct,100)+'%';
+  fill.className='bar-fill'+(pct>=100?' over':pct<50?' warn':'');
+  document.getElementById('barText').textContent=`${total} / ${goal} ml`;
+  const rtBox=document.getElementById('realtimeBox');
+  if(isToday&&entries.length>0){
+    rtBox.style.display='block';
+    const rt=calcRealtime(entries);
+    if(rt){
+      document.getElementById('realtimeVal').textContent=rt.currentEstimate+' ml';
+      document.getElementById('realtimeSub').textContent=`목표의 ${Math.round(rt.currentEstimate/goal*100)}% · 하루 끝까지 약 ${rt.projectedTotal}ml 예상`;
+      document.getElementById('rateInfo').textContent=`현재 속도: 시간당 약 ${rt.lastRate}ml`;
     }
-  } else { rtBox.style.display = 'none'; }
-
-  // 메모 표시
-  const memo = allMemos[dateKey];
-  const memoCard = document.getElementById('viewMemoCard');
-  if (memo) {
-    memoCard.style.display = 'block';
-    document.getElementById('viewMemoText').textContent = memo;
-  } else { memoCard.style.display = 'none'; }
-
-  // 구간별 로그
-  const list = document.getElementById('logList2');
-  if (entries.length === 0) { list.innerHTML = '<li class="empty">아직 기록이 없어요</li>'; return; }
-  list.innerHTML = entries.map((e, i) => {
-    const fromHour = i === 0 ? 0 : entries[i-1].hour;
-    const duration = e.hour - fromHour;
-    const rate = duration > 0 ? Math.round(e.ml / duration * 10) / 10 : '—';
-    return `<li class="log-item">
-      <span class="log-time">${hourToLabel(e.hour)}</span>
-      <div style="flex:1;">
-        <div class="log-ml">${e.ml} ml</div>
-        <div class="log-rate">${hourToLabel(fromHour)} ~ ${hourToLabel(e.hour)} (${duration}시간, ${rate}ml/h)</div>
-      </div>
-      <button class="log-del" onclick="deleteEntry('${dateKey}', ${e.id})">🗑</button>
-    </li>`;
+  } else rtBox.style.display='none';
+  const memo=allMemos[dateKey];
+  const memoCard=document.getElementById('viewMemoCard');
+  if(memo){memoCard.style.display='block';document.getElementById('viewMemoText').textContent=memo;}
+  else memoCard.style.display='none';
+  const list=document.getElementById('logList2');
+  if(!entries.length){list.innerHTML='<li class="empty">아직 기록이 없어요</li>';return;}
+  list.innerHTML=entries.map((e,i)=>{
+    const fh=i===0?0:entries[i-1].hour;const dur=e.hour-fh;const rate=dur>0?Math.round(e.ml/dur*10)/10:'—';
+    return `<li class="log-item"><span class="log-time">${hourToLabel(e.hour)}</span><div style="flex:1;"><div class="log-ml">${e.ml} ml</div><div class="log-rate">${hourToLabel(fh)} ~ ${hourToLabel(e.hour)} (${dur}시간, ${rate}ml/h)</div></div><button class="log-del" onclick="deleteEntry('${dateKey}',${e.id})">🗑</button></li>`;
   }).join('');
 }
 
-function renderInputTab() {
-  const dateKey = document.getElementById('dateInput').value;
-  const entries = getEntries(dateKey);
-  const list = document.getElementById('logList');
-  if (entries.length === 0) { list.innerHTML = '<li class="empty">아직 기록이 없어요</li>'; return; }
-  list.innerHTML = entries.map((e, i) => {
-    const fromHour = i === 0 ? 0 : entries[i-1].hour;
-    const duration = e.hour - fromHour;
-    const rate = duration > 0 ? Math.round(e.ml / duration * 10) / 10 : '—';
-    return `<li class="log-item">
-      <span class="log-time">${hourToLabel(e.hour)}</span>
-      <div style="flex:1;">
-        <div class="log-ml">${e.ml} ml</div>
-        <div class="log-rate">${hourToLabel(fromHour)}~${hourToLabel(e.hour)} (${duration}h, ${rate}ml/h)</div>
-      </div>
-      <button class="log-del" onclick="deleteEntry('${dateKey}', ${e.id})">🗑</button>
-    </li>`;
+function renderInputTab(){
+  const dateKey=document.getElementById('dateInput').value;
+  const entries=getEntries(dateKey);
+  const list=document.getElementById('logList');
+  if(!entries.length){list.innerHTML='<li class="empty">아직 기록이 없어요</li>';return;}
+  list.innerHTML=entries.map((e,i)=>{
+    const fh=i===0?0:entries[i-1].hour;const dur=e.hour-fh;const rate=dur>0?Math.round(e.ml/dur*10)/10:'—';
+    return `<li class="log-item"><span class="log-time">${hourToLabel(e.hour)}</span><div style="flex:1;"><div class="log-ml">${e.ml} ml</div><div class="log-rate">${hourToLabel(fh)}~${hourToLabel(e.hour)} (${dur}h, ${rate}ml/h)</div></div><button class="log-del" onclick="deleteEntry('${dateKey}',${e.id})">🗑</button></li>`;
   }).join('');
 }
 
-function renderHistory() {
-  const goal = parseInt(document.getElementById('goalInput').value) || 500;
-  const keys = Object.keys(allLogs).sort().reverse();
-  const hist = document.getElementById('historyList');
-  if (keys.length === 0) { hist.innerHTML = '<div class="empty">히스토리 없음</div>'; return; }
-  hist.innerHTML = keys.map(k => {
-    const entries = getEntries(k);
-    const total = entries.reduce((s, e) => s + e.ml, 0);
-    const pct = Math.round(total / goal * 100);
-    const color = pct >= 100 ? '#0F6E56' : pct >= 60 ? '#854F0B' : '#A32D2D';
-    const detail = entries.map(e => `${hourToLabel(e.hour)} ${e.ml}ml`).join(' · ');
-    const isToday = k === todayStr();
-    const memo = allMemos[k];
-    return `<div class="hist-item">
-      <div class="hist-date">${formatDateKo(k)}${isToday ? ' <span style="font-size:11px;background:#e1f5ee;color:#0F6E56;padding:2px 6px;border-radius:10px;">오늘</span>' : ''} — <span style="color:${color};font-weight:700">${total}ml</span> <span style="font-size:12px;color:#bbb;">(${pct}%)</span></div>
-      <div class="hist-detail">${detail || '기록 없음'}</div>
-      ${memo ? `<div class="hist-memo">📝 ${memo}</div>` : ''}
-    </div>`;
+function renderHeatmap(){
+  const today=todayStr();
+  const goal=parseInt(document.getElementById('goalInput').value)||500;
+  document.getElementById('heatmapTitle').textContent=`${heatmapYear}년 ${heatmapMonth+1}월`;
+  const firstDow=new Date(heatmapYear,heatmapMonth,1).getDay();
+  const offset=firstDow===0?6:firstDow-1;
+  const daysInMonth=new Date(heatmapYear,heatmapMonth+1,0).getDate();
+  const dows=['월','화','수','목','금','토','일'];
+  let html=dows.map(d=>`<div class="heatmap-dow">${d}</div>`).join('');
+  for(let i=0;i<offset;i++)html+=`<div class="heatmap-cell empty"></div>`;
+  for(let day=1;day<=daysInMonth;day++){
+    const k=`${heatmapYear}-${String(heatmapMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const isFuture=k>today;
+    const isToday=k===today;
+    if(isFuture){html+=`<div class="heatmap-cell future">${day}</div>`;continue;}
+    const total=getDayTotal(k);
+    let cls='c0';
+    if(total>0){const p=total/goal;if(p>=1.2)cls='c4';else if(p>=1)cls='c3';else if(p>=0.6)cls='c2';else if(p>=0.3)cls='c1';}
+    html+=`<div class="heatmap-cell ${cls}${isToday?' today-ring':''}" title="${total}ml">${day}</div>`;
+  }
+  document.getElementById('heatmapGrid').innerHTML=html;
+}
+
+function renderHistory(){
+  const goal=parseInt(document.getElementById('goalInput').value)||500;
+  const today=todayStr();
+  const keys=Object.keys(allLogs).sort().reverse();
+  const allTotals=keys.map(k=>({k,total:getDayTotal(k)}));
+  const totalDays=allTotals.length;
+  const avg=totalDays?Math.round(allTotals.reduce((s,d)=>s+d.total,0)/totalDays):0;
+  const best=allTotals.reduce((b,d)=>d.total>b.total?d:b,{total:0,k:''});
+  const goalDays=allTotals.filter(d=>d.total>=goal).length;
+  const achieveRate=totalDays?Math.round(goalDays/totalDays*100):0;
+  let streak=0;
+  for(const k of [...keys].sort().reverse()){if(getDayTotal(k)>=goal)streak++;else break;}
+  const todayDate=new Date(today+'T00:00:00');
+  const dow=todayDate.getDay();
+  const thisMonday=new Date(todayDate);thisMonday.setDate(todayDate.getDate()-(dow===0?6:dow-1));
+  const lastMonday=new Date(thisMonday);lastMonday.setDate(thisMonday.getDate()-7);
+  const thisMondayKey=toKey(thisMonday);const lastMondayKey=toKey(lastMonday);
+  const thisWeekKeys=keys.filter(k=>k>=thisMondayKey&&k<=today);
+  const lastWeekKeys=keys.filter(k=>k>=lastMondayKey&&k<thisMondayKey);
+  const weekAvg=thisWeekKeys.length?Math.round(thisWeekKeys.reduce((s,k)=>s+getDayTotal(k),0)/thisWeekKeys.length):0;
+  const prevWeekAvg=lastWeekKeys.length?Math.round(lastWeekKeys.reduce((s,k)=>s+getDayTotal(k),0)/lastWeekKeys.length):0;
+
+  document.getElementById('avgVal').textContent=avg||'—';
+  document.getElementById('bestVal').textContent=best.total||'—';
+  document.getElementById('bestDate').textContent=best.k?best.k.slice(5).replace('-','/'):'';
+  document.getElementById('streakVal').textContent=streak||'0';
+  document.getElementById('achieveRateVal').textContent=achieveRate||'0';
+  document.getElementById('weekAvgVal').textContent=weekAvg||'—';
+  document.getElementById('prevWeekAvgVal').textContent=prevWeekAvg||'—';
+  const trendEl=document.getElementById('weekTrend');
+  if(prevWeekAvg&&weekAvg){const up=weekAvg>=prevWeekAvg;trendEl.innerHTML=`<span style="color:${up?'#1D9E75':'#E24B4A'}">${up?'▲':'▼'} ${Math.abs(weekAvg-prevWeekAvg)}ml</span>`;}
+  else trendEl.textContent='평균ml';
+  document.getElementById('goalDaysVal').textContent=goalDays;
+  document.getElementById('totalDaysVal').textContent=totalDays;
+
+  // 바 차트
+  const chartDays=[];
+  for(let i=13;i>=0;i--){const d=new Date(today+'T00:00:00');d.setDate(d.getDate()-i);chartDays.push({k:toKey(d),label:String(d.getDate())+'일'});}
+  const maxVal=Math.max(...chartDays.map(d=>getDayTotal(d.k)),goal,1);
+  const goalPct=Math.round(goal/maxVal*100);
+  let barHtml=`<div class="chart-goal-line" style="bottom:${Math.round(goal/maxVal*106)}px;"><span class="chart-goal-tag">${goal}</span></div>`;
+  barHtml+=chartDays.map(d=>{
+    const total=getDayTotal(d.k);
+    const h=Math.max(Math.round(total/maxVal*106),total>0?2:0);
+    const cls=total>=goal?'c-green':total>=goal*0.6?'c-amber':total>0?'c-light':'c-empty';
+    return `<div class="chart-bar-col"><div class="chart-bar ${cls}" style="height:${h}px;"></div><div class="chart-bar-label">${d.label}</div></div>`;
+  }).join('');
+  document.getElementById('barChart').innerHTML=barHtml;
+
+  renderHeatmap();
+
+  // 리스트
+  const hist=document.getElementById('historyList');
+  if(!keys.length){hist.innerHTML='<div class="empty">히스토리 없음</div>';return;}
+  hist.innerHTML=keys.map(k=>{
+    const entries=getEntries(k);
+    const total=entries.reduce((s,e)=>s+e.ml,0);
+    const pct=Math.round(total/goal*100);
+    const color=pct>=100?'#0F6E56':pct>=60?'#854F0B':'#A32D2D';
+    const detail=entries.map(e=>`${hourToLabel(e.hour)} ${e.ml}ml`).join(' · ');
+    const isToday=k===today;
+    const memo=allMemos[k];
+    return `<div class="hist-item"><div class="hist-date">${formatDateKo(k)}${isToday?' <span style="font-size:11px;background:#e1f5ee;color:#0F6E56;padding:2px 6px;border-radius:10px;">오늘</span>':''} — <span style="color:${color};font-weight:700">${total}ml</span> <span style="font-size:12px;color:#bbb;">(${pct}%)</span></div><div class="hist-detail">${detail||'기록 없음'}</div>${memo?`<div class="hist-memo">📝 ${memo}</div>`:''}</div>`;
   }).join('');
 }
 
-function renderAll() {
-  renderInputTab();
-  updateViewTab();
-  renderHistory();
-}
+function renderAll(){renderInputTab();updateViewTab();renderHistory();}
 
-function initHourPicker() {
-  const h = new Date().getHours();
-  selectedHour = h;
-  selectedAmPm = h < 12 ? 'am' : 'pm';
-  document.getElementById('amBtn').classList.toggle('selected', selectedAmPm === 'am');
-  document.getElementById('pmBtn').classList.toggle('selected', selectedAmPm === 'pm');
+function initHourPicker(){
+  const h=new Date().getHours();selectedHour=h;selectedAmPm=h<12?'am':'pm';
+  document.getElementById('amBtn').classList.toggle('selected',selectedAmPm==='am');
+  document.getElementById('pmBtn').classList.toggle('selected',selectedAmPm==='pm');
   renderHourGrid();
 }
 
-onValue(ref(db, 'goal'), snap => {
-  document.getElementById('goalInput').value = snap.val() || 500;
-});
+onValue(ref(db,'goal'),snap=>{document.getElementById('goalInput').value=snap.val()||500;});
+onValue(ref(db,'logs'),snap=>{allLogs=snap.val()||{};renderAll();});
+onValue(ref(db,'memos'),snap=>{allMemos=snap.val()||{};renderAll();loadMemoForDate(document.getElementById('dateInput').value);});
 
-onValue(ref(db, 'logs'), snap => {
-  allLogs = snap.val() || {};
-  renderAll();
-});
-
-onValue(ref(db, 'memos'), snap => {
-  allMemos = snap.val() || {};
-  renderAll();
-  // 현재 입력탭 날짜 메모 갱신
-  loadMemoForDate(document.getElementById('dateInput').value);
-});
-
-initDates();
-initHourPicker();
+initDates();initHourPicker();
 </script>
 </body>
 </html>
